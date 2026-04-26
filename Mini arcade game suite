@@ -1,0 +1,89 @@
+import pygame
+import random
+
+# Initialize pygame
+pygame.init()
+
+# Screen
+WIDTH, HEIGHT = 800, 600
+screen = pygame.display.set_mode((WIDTH, HEIGHT))
+pygame.display.set_caption("Breakout Game")
+
+# Colors
+WHITE = (255, 255, 255)
+BLUE = (0, 0, 255)
+RED = (255, 0, 0)
+BLACK = (0, 0, 0)
+
+# Paddle
+paddle = pygame.Rect(WIDTH//2 - 60, HEIGHT - 30, 120, 10)
+paddle_speed = 7
+
+# Ball
+ball = pygame.Rect(WIDTH//2, HEIGHT//2, 15, 15)
+ball_dx = 4 * random.choice((1, -1))
+ball_dy = -4
+
+# Bricks
+bricks = []
+for row in range(5):
+    for col in range(10):
+        brick = pygame.Rect(col*80 + 5, row*30 + 40, 70, 20)
+        bricks.append(brick)
+
+clock = pygame.time.Clock()
+running = True
+
+# Game loop
+while running:
+    screen.fill(BLACK)
+
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+
+    # Paddle movement
+    keys = pygame.key.get_pressed()
+    if keys[pygame.K_LEFT] and paddle.left > 0:
+        paddle.x -= paddle_speed
+    if keys[pygame.K_RIGHT] and paddle.right < WIDTH:
+        paddle.x += paddle_speed
+
+    # Ball movement
+    ball.x += ball_dx
+    ball.y += ball_dy
+
+    # Wall collision
+    if ball.left <= 0 or ball.right >= WIDTH:
+        ball_dx *= -1
+    if ball.top <= 0:
+        ball_dy *= -1
+
+    # Paddle collision
+    if ball.colliderect(paddle):
+        ball_dy *= -1
+
+    # Brick collision
+    for brick in bricks[:]:
+        if ball.colliderect(brick):
+            bricks.remove(brick)
+            ball_dy *= -1
+            break
+
+    # Game over
+    if ball.bottom >= HEIGHT:
+        print("Game Over")
+        running = False
+
+    # Draw objects
+    pygame.draw.rect(screen, BLUE, paddle)
+    pygame.draw.ellipse(screen, WHITE, ball)
+
+    for brick in bricks:
+        pygame.draw.rect(screen, RED, brick)
+
+    pygame.display.flip()
+    clock.tick(60)
+
+   pygame.quit()
+
