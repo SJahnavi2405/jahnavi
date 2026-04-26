@@ -1,2 +1,10 @@
-# jahnavi
-Our Project entitled “The Mini Arcade Game Suite”. This project is aimed to develop a Mini Arcade Game Suite that integrates multiple games into a single system. The Mini Arcade Game Suite is a Python-based interactive application that integrates multiple small games into a single unified system. 
+  Mini arcade game suite
+  Section - 8 | Batch 8
+  Team Members
+  2500031061 	S JAHNAVI BINNESHA
+  2500031234 	Y VENU SURYA ARAVIND
+  2500031265	G RUSHIKESH
+  2500031499  B MANOJ KUMAR
+  2500090123  G RAGHU RAM TEJA        	 
+ 
+
